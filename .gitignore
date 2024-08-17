@@ -9,7 +9,7 @@ lerna-debug.log*
 
 package.lock.json
 pnpm-lock.yaml
-bun.lockdb
+bun.lockb
 
 node_modules
 dist
