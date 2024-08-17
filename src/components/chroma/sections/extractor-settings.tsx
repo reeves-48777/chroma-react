@@ -1,9 +1,7 @@
-function ExtractorSettings() {
+export default function ExtractorSettings() {
   return (
     <div>
       <p>Test</p>
     </div>
   );
 }
-
-export default ExtractorSettings;
