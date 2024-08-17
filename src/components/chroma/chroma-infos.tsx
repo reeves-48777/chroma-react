@@ -121,7 +121,7 @@ const Content = () => {
                       <span>{note.version}</span>
                     </AccordionTrigger>
                     <AccordionContent>
-                      <Markdown className='prose prose-sm text-muted-foreground prose-h1:text-muted-foreground'>
+                      <Markdown className='prose prose-sm text-muted-foreground prose-h1:text-muted-foreground prose-blockquote:text-muted-foreground/80'>
                         {note.text}
                       </Markdown>
                     </AccordionContent>
