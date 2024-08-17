@@ -15,7 +15,6 @@ function ChromaContextManager() {
     (state) => state.toggleContextVisibilty
   );
 
-  const icon = isContextVisible ? <PanelLeftClose /> : <PanelLeftOpen />;
   const tooltip = isContextVisible ? 'Close left panel' : 'Open left panel';
   return (
     <>
@@ -29,7 +28,7 @@ function ChromaContextManager() {
               aria-label={tooltip}
               onClick={toggleContextVisibility}
             >
-              {icon}
+              {isContextVisible ? <PanelLeftClose /> : <PanelLeftOpen />}
             </Button>
           </TooltipTrigger>
           <TooltipContent
@@ -56,8 +55,9 @@ const ExtractorSettings = lazy(
   () => import('@/components/chroma/sections/extractor-settings')
 );
 
-export default function ChromaMenu({ className = '' }: MenuProps) {
+const Menu = ({ className = '' }: MenuProps) => {
   const selectMenu = useUIStore((state) => state.selectMenu);
+
   const isContextVisible = useUIStore((state) => state.isContextVisible);
   const setIsContextVisible = useUIStore((state) => state.setIsContextVisible);
 
@@ -73,11 +73,7 @@ export default function ChromaMenu({ className = '' }: MenuProps) {
                 className='rounded-lg'
                 aria-label='Extract palette from image'
                 onClick={() => {
-                  selectMenu({
-                    name: 'Image Extractor',
-                    desc: 'Extract colors from image',
-                    component: <ImageExtractor />,
-                  });
+                  selectMenu(ImageExtractor);
                   if (!isContextVisible) {
                     setIsContextVisible(true);
                   }
@@ -102,13 +98,7 @@ export default function ChromaMenu({ className = '' }: MenuProps) {
                 size='icon'
                 className='rounded-lg'
                 aria-label='Settings'
-                onClick={() =>
-                  selectMenu({
-                    name: 'Settings',
-                    desc: 'Change the settings of the extraction algorithm',
-                    component: <ExtractorSettings />,
-                  })
-                }
+                onClick={() => selectMenu(ExtractorSettings)}
               >
                 <Settings2 className='size-5' />
               </Button>
@@ -125,6 +115,19 @@ export default function ChromaMenu({ className = '' }: MenuProps) {
       <nav className='mt-auto gap-1 p-2 hidden md:grid'>
         <ChromaContextManager />
       </nav>
+    </>
+  );
+};
+
+export default function ChromaMenu() {
+  return (
+    <>
+      <aside className='z-20 h-full w-full hidden md:flex items-center flex-col border-r'>
+        <Menu />
+      </aside>
+      <footer className='row-start-3 col-span-2 md:hidden border-t flex items-center justify-center'>
+        <Menu />
+      </footer>
     </>
   );
 }
