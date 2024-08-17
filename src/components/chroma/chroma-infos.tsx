@@ -23,14 +23,14 @@ import {
   DialogFooter,
 } from '@/components/ui/dialog';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Note } from '@/core';
-import usePatchNotes from '@/hooks/patch-notes';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@radix-ui/react-tooltip';
+} from '@/components/ui/tooltip';
+import { Note } from '@/core';
+import usePatchNotes from '@/hooks/patch-notes';
 import { Info, Github, Globe, CircleX } from 'lucide-react';
 import Markdown from 'react-markdown';
 
@@ -40,28 +40,38 @@ const Footer = () => {
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button
-              size='icon'
-              variant='ghost'
-            >
-              <Github />
-            </Button>
+            <a href='https://github.com/reeves-48777'>
+              <Button
+                size='icon'
+                variant='ghost'
+              >
+                <Github />
+              </Button>
+            </a>
           </TooltipTrigger>
-          <TooltipContent className='text-sm'>Github account</TooltipContent>
+          <TooltipContent className='text-sm'>
+            <p>Github account</p>
+          </TooltipContent>
         </Tooltip>
       </TooltipProvider>
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button
-              size='icon'
-              variant='ghost'
+            <a
+              href='#'
+              aria-disabled='true'
             >
-              <Globe />
-            </Button>
+              <Button
+                size='icon'
+                variant='ghost'
+                disabled
+              >
+                <Globe />
+              </Button>
+            </a>
           </TooltipTrigger>
           <TooltipContent className='text-sm'>
-            Portfolio (coming soon)
+            <p>Portfolio (coming soon)</p>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
@@ -70,12 +80,7 @@ const Footer = () => {
 };
 
 const Content = () => {
-  // const patchNotes = Array.from({ length: 5 }).map((_, i) => ({
-  //   version: `version ${i / 10}`,
-  //   text: '# Summary **SHEESH**',
-  // }));
-
-  const { patchNotes, isLoading, error } = usePatchNotes();
+  const { patchNotes, isLoading, isError } = usePatchNotes();
 
   return (
     <>
@@ -84,15 +89,16 @@ const Content = () => {
         <DialogDescription>
           See what changed through the versions
         </DialogDescription>
-        {error && (
+        {isError && (
           <Card className='border border-red-400 dark:border-red-700 text-red-400 dark:text-red-700 rounded-lg'>
             <CardHeader>
               <CardTitle>Oops</CardTitle>
-              <CardDescription>Something went wrong</CardDescription>
+              <CardDescription className='text-red-400 dark:text-red-700'>
+                Something went wrong
+              </CardDescription>
             </CardHeader>
             <CardContent className='flex items-center justify-center'>
-              <pre>{error}</pre>
-              <CircleX />
+              <CircleX size={128} />
             </CardContent>
           </Card>
         )}
@@ -112,10 +118,12 @@ const Content = () => {
                     className='w-[calc(100%-1rem)]'
                   >
                     <AccordionTrigger className='font-bold'>
-                      <span className='capitalize'>{note.version}</span>
+                      <span>{note.version}</span>
                     </AccordionTrigger>
                     <AccordionContent>
-                      <Markdown>{note.text}</Markdown>
+                      <Markdown className='prose prose-sm text-muted-foreground prose-h1:text-muted-foreground'>
+                        {note.text}
+                      </Markdown>
                     </AccordionContent>
                   </AccordionItem>
                 </Accordion>
@@ -129,7 +137,7 @@ const Content = () => {
   );
 };
 
-const ChromaInfos = () => {
+export default function ChromaInfos() {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -145,6 +153,4 @@ const ChromaInfos = () => {
       </DialogContent>
     </Dialog>
   );
-};
-
-export default ChromaInfos;
+}
