@@ -1,11 +1,9 @@
-import { ReactNode } from 'react';
+import { lazy, FunctionComponent } from 'react';
 import { create } from 'zustand';
 
-type MenuObject = {
-  name?: string;
-  desc?: string;
-  component: ReactNode;
-};
+const ImageExtractor = lazy(
+  () => import('@/components/chroma/sections/image-extractor')
+);
 
 type OrientationType = 'horizontal' | 'vertical';
 
@@ -14,8 +12,8 @@ type Store = {
   toggleContextVisibilty: () => void;
   setIsContextVisible: (visible: boolean) => void;
 
-  menu: MenuObject | null;
-  selectMenu: (menu: MenuObject) => void;
+  menu: FunctionComponent;
+  selectMenu: (menu: FunctionComponent) => void;
 
   paletteOrientation: OrientationType;
   setPaletteOrientation: (orientation: OrientationType) => void;
@@ -27,8 +25,8 @@ const useUIStore = create<Store>((set) => ({
     set((state) => ({ isContextVisible: !state.isContextVisible })),
   setIsContextVisible: (visible: boolean) =>
     set(() => ({ isContextVisible: visible })),
-  menu: null,
-  selectMenu: (menu: MenuObject) => set(() => ({ menu })),
+  menu: ImageExtractor,
+  selectMenu: (menu: FunctionComponent) => set(() => ({ menu })),
   paletteOrientation: 'horizontal',
   setPaletteOrientation: (orientation: OrientationType) =>
     set(() => ({ paletteOrientation: orientation })),
