@@ -1,0 +1,3 @@
+[submodule "chroma-wasm"]
+	path = chroma-wasm
+	url = https://github.com/reeves-48777/chroma-wasm.git
