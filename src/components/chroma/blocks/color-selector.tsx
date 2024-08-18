@@ -22,7 +22,7 @@ export default function ColorSelector() {
   return (
     <fieldset
       className={cn(
-        'grid gap-6 rounded-lg border p-4',
+        'grid gap-6 rounded-lg border p-4 select-none',
         noColors && 'text-muted',
         noColors && 'border-dashed'
       )}

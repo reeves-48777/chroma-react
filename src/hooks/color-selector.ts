@@ -7,34 +7,21 @@ export const useColorSelector = () => {
 
   const colorContainerRef = useRef<HTMLDivElement>(null);
   const activeCheckboxes = useRef<Set<string>>(new Set());
+  const isMoving = useRef(false);
 
   const handleStart = useCallback(
     (event: MouseEvent | TouchEvent) => {
-      event.preventDefault();
+      if (event instanceof TouchEvent) {
+        event.preventDefault();
+      }
       setIsDragActive(true);
       activeCheckboxes.current.clear();
     },
     [setIsDragActive, activeCheckboxes]
   );
 
-  const handleMove = useCallback(
-    (event: MouseEvent | TouchEvent) => {
-      if (!isDragActive || !colorContainerRef.current) return;
-
-      let clientX, clientY;
-      if (event instanceof MouseEvent) {
-        clientX = event.clientX;
-        clientY = event.clientY;
-      } else if (event instanceof TouchEvent) {
-        const touch = event.touches[0];
-        clientX = touch.clientX;
-        clientY = touch.clientY;
-      } else {
-        return;
-      }
-
-      const target = document.elementFromPoint(clientX, clientY);
-
+  const handleTarget = useCallback(
+    (target: Element | null) => {
       if (
         target &&
         target instanceof HTMLElement &&
@@ -48,7 +35,86 @@ export const useColorSelector = () => {
         }
       }
     },
-    [isDragActive, activeCheckboxes, toggleColor]
+    [toggleColor, activeCheckboxes]
+  );
+
+  // a naive try and fail on optimisation
+  // const handleMouseMove = useCallback(
+  //   (event: MouseEvent) => {
+  //     if (!isDragActive || !colorContainerRef.current || isMoving.current) {
+  //       return;
+  //     }
+  //     console.log('aled');
+
+  //     isMoving.current = true;
+  //     requestAnimationFrame(() => {
+  //       const clientX = event.clientX;
+  //       const clientY = event.clientY;
+
+  //       if (clientX !== undefined && clientY !== undefined) {
+  //         const target = document.elementFromPoint(clientX, clientY);
+  //         handleTarget(target);
+  //       }
+
+  //       isMoving.current = false;
+  //     });
+  //   },
+  //   [isDragActive, colorContainerRef, isMoving, handleTarget]
+  // );
+
+  // const handleTouchMove = useCallback(
+  //   (event: TouchEvent) => {
+  //     if (!isDragActive || !colorContainerRef.current || isMoving.current) {
+  //       return;
+  //     }
+
+  //     isMoving.current = true;
+  //     requestAnimationFrame(() => {
+  //       const touch = event.touches[0];
+  //       console.log(touch);
+  //       const clientX = touch.clientX;
+  //       const clientY = touch.clientY;
+
+  //       if (clientX !== undefined && clientY !== undefined) {
+  //         const target = document.elementFromPoint(clientX, clientY);
+  //         handleTarget(target);
+  //       }
+
+  //       isMoving.current = false;
+  //     });
+  //   },
+  //   [isDragActive, colorContainerRef, isMoving, handleTarget]
+  // );
+
+  const handleMove = useCallback(
+    (event: MouseEvent | TouchEvent) => {
+      if (!isDragActive || !colorContainerRef.current || isMoving.current)
+        return;
+
+      isMoving.current = true;
+      requestAnimationFrame(() => {
+        let clientX: number | undefined, clientY: number | undefined;
+
+        if (event instanceof MouseEvent) {
+          clientX = event.clientX;
+          clientY = event.clientY;
+        } else if (event instanceof TouchEvent) {
+          const touch = event.touches[0];
+          clientX = touch.clientX;
+          clientY = touch.clientY;
+        } else {
+          return;
+        }
+
+        if (clientX !== undefined && clientY !== undefined) {
+          const target = document.elementFromPoint(clientX, clientY);
+          handleTarget(target);
+        }
+
+        isMoving.current = false;
+      });
+    },
+    [isDragActive, handleTarget]
   );
 
   const handleEnd = useCallback(() => {
