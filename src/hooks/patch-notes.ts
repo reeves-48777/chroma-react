@@ -29,7 +29,7 @@ const usePatchNotes = () => {
         }
 
         const notes = [];
-        for (const file of data.files) {
+        for (const file of data.files.reverse()) {
           const res = await fetch(`${baseUrl}patch-notes/${file}`, { signal });
           if (!res.ok) {
             throw new Error(`Failed to fetch the content of ${file}`);
