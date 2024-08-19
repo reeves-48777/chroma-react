@@ -1,6 +1,8 @@
 import { Note } from '@/core';
 import { useState, useEffect } from 'react';
 
+const baseUrl = import.meta.env.BASE_URL;
+
 const usePatchNotes = () => {
   const [patchNotes, setPatchNotes] = useState<Note[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -14,7 +16,9 @@ const usePatchNotes = () => {
         setIsLoading(true);
 
         // step 1 : fetch files list
-        const response = await fetch('/patch-notes/manifest.json', { signal });
+        const response = await fetch(`${baseUrl}patch-notes/manifest.json`, {
+          signal,
+        });
         if (!response.ok) {
           throw new Error('Failed to fetch the list of patch notes');
         }
@@ -26,7 +30,7 @@ const usePatchNotes = () => {
 
         const notes = [];
         for (const file of data.files) {
-          const res = await fetch(`/patch-notes/${file}`, { signal });
+          const res = await fetch(`${baseUrl}patch-notes/${file}`, { signal });
           if (!res.ok) {
             throw new Error(`Failed to fetch the content of ${file}`);
           }
