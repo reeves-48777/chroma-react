@@ -36,18 +36,16 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Link project to Vercel
+      - name: Deploy project to VPS via SSH
         env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          SSH_PRIVATE_KEY: ${{ secrets.VPS_DEPLOY_KEY }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+          VPS_HOST: ${{ secrets.VPS_IP }}
+          VPS_APP_DESTINATION: ${{ secrets.VPS_APP_DESTINATION }}
         run: |
-          echo "y" | npx vercel link --token $VERCEL_TOKEN --project $VERCEL_PROJECT_ID --scope $VERCEL_ORG_ID --yes
-
-      - name: Deploy to Vercel
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-        run: |
-          echo "y" | npx vercel --prod --token $VERCEL_TOKEN --scope $VERCEL_ORG_ID --project $VERCEL_PROJECT_ID --yes
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H $VPS_HOST >> ~/.ssh/known_hosts
+          rsync -avs --delete-after --exclude='node_modules' ./dist $VPS_USER@$VPS_HOST:$VPS_APP_DESTINATION
+          ssh $VPS_USER@$VPS_HOST "systemctl restart nginx"
