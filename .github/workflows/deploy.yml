@@ -47,5 +47,5 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H $VPS_HOST >> ~/.ssh/known_hosts
-          rsync -avz --delete-after --exclude='node_modules' ./dist $VPS_USER@$VPS_HOST:$VPS_APP_DESTINATION
+          scp -r ./dist $VPS_USER@$VPS_HOST:$VPS_APP_DESTINATION
           ssh $VPS_USER@$VPS_HOST "systemctl restart nginx"
