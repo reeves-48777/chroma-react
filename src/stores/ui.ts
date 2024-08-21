@@ -5,18 +5,19 @@ const ImageExtractor = lazy(
   () => import('@/components/chroma/sections/image-extractor')
 );
 
-type OrientationType = 'horizontal' | 'vertical';
+type OrientationType = 'portrait' | 'landscape';
 
 type Store = {
   isContextVisible: boolean;
   toggleContextVisibilty: () => void;
   setIsContextVisible: (visible: boolean) => void;
 
-  menu: FunctionComponent;
-  selectMenu: (menu: FunctionComponent) => void;
-
   paletteOrientation: OrientationType;
   setPaletteOrientation: (orientation: OrientationType) => void;
+  togglePaletteOrientation: () => void;
+
+  menu: FunctionComponent;
+  selectMenu: (menu: FunctionComponent) => void;
 };
 
 const useUIStore = create<Store>((set) => ({
@@ -25,11 +26,17 @@ const useUIStore = create<Store>((set) => ({
     set((state) => ({ isContextVisible: !state.isContextVisible })),
   setIsContextVisible: (visible: boolean) =>
     set(() => ({ isContextVisible: visible })),
-  menu: ImageExtractor,
-  selectMenu: (menu: FunctionComponent) => set(() => ({ menu })),
-  paletteOrientation: 'horizontal',
+  paletteOrientation: 'landscape',
   setPaletteOrientation: (orientation: OrientationType) =>
     set(() => ({ paletteOrientation: orientation })),
+  togglePaletteOrientation: () =>
+    set((state) => ({
+      paletteOrientation:
+        state.paletteOrientation === 'landscape' ? 'portrait' : 'landscape',
+    })),
+
+  menu: ImageExtractor,
+  selectMenu: (menu: FunctionComponent) => set(() => ({ menu })),
 }));
 
 export default useUIStore;
