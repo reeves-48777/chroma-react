@@ -1,18 +1,5 @@
-import { Spinner } from '../ui/spinner';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
+import PatchNotesViewer from './sections/patch-notes-viewer';
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
 import {
   Dialog,
   DialogTrigger,
@@ -22,21 +9,17 @@ import {
   DialogDescription,
   DialogFooter,
 } from '@/components/ui/dialog';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { Note } from '@/core';
-import usePatchNotes from '@/hooks/patch-notes';
-import { Info, Github, Globe, CircleX } from 'lucide-react';
-import Markdown from 'react-markdown';
+import { Info, Github, Globe } from 'lucide-react';
 
 const Footer = () => {
   return (
-    <DialogFooter className='flex items-center justify-center'>
+    <DialogFooter className='flex flex-row items-center justify-center'>
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
@@ -80,8 +63,6 @@ const Footer = () => {
 };
 
 const Content = () => {
-  const { patchNotes, isLoading, isError } = usePatchNotes();
-
   return (
     <>
       <DialogHeader>
@@ -89,49 +70,8 @@ const Content = () => {
         <DialogDescription>
           See what changed through the versions
         </DialogDescription>
-        {isError && (
-          <Card className='border border-red-400 dark:border-red-700 text-red-400 dark:text-red-700 rounded-lg'>
-            <CardHeader>
-              <CardTitle>Oops</CardTitle>
-              <CardDescription className='text-red-400 dark:text-red-700'>
-                Something went wrong
-              </CardDescription>
-            </CardHeader>
-            <CardContent className='flex items-center justify-center'>
-              <CircleX size={128} />
-            </CardContent>
-          </Card>
-        )}
-        {isLoading ? (
-          <Spinner />
-        ) : (
-          <div className='text-muted-foreground'>
-            <ScrollArea className='h-96'>
-              {patchNotes.map((note: Note) => (
-                <Accordion
-                  key={note.version}
-                  type='single'
-                  collapsible
-                >
-                  <AccordionItem
-                    value={note.version}
-                    className='w-[calc(100%-1rem)]'
-                  >
-                    <AccordionTrigger className='font-bold'>
-                      <span>{note.version}</span>
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <Markdown className='prose prose-sm text-muted-foreground prose-h1:text-muted-foreground prose-blockquote:text-muted-foreground/80'>
-                        {note.text}
-                      </Markdown>
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-              ))}
-            </ScrollArea>
-          </div>
-        )}
       </DialogHeader>
+      <PatchNotesViewer />
       <Footer />
     </>
   );
