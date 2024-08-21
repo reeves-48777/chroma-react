@@ -132,7 +132,7 @@ const Menu = ({ className = '' }: MenuProps) => {
 export default function ChromaMenu() {
   return (
     <>
-      <aside className='z-20 h-full w-full hidden md:flex items-center flex-col'>
+      <aside className='z-20 h-full w-full hidden md:flex items-center flex-col border-r'>
         <Menu />
       </aside>
       <footer className='row-start-3 col-span-2 md:hidden flex items-center justify-center border-t'>
