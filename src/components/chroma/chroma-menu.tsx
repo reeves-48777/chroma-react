@@ -5,7 +5,7 @@ import {
   TooltipTrigger,
   TooltipContent,
 } from '@/components/ui/tooltip';
-import { useUI } from '@/hooks/ui';
+import { useDeviceType } from '@/hooks/utils';
 import useUIStore from '@/stores/ui';
 import { Image, Settings2, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
 import { lazy } from 'react';
@@ -65,7 +65,7 @@ const Menu = ({ className = '' }: MenuProps) => {
     (state) => state.toggleContextVisibilty
   );
 
-  const { isMobileDevice } = useUI();
+  const { isMobileDevice } = useDeviceType();
 
   return (
     <>

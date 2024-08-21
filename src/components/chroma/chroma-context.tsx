@@ -1,4 +1,4 @@
-import { useUI } from '@/hooks/ui';
+import { useDeviceType } from '@/hooks/utils';
 import { cn } from '@/lib/utils';
 import useUIStore from '@/stores/ui';
 import { ReactNode } from 'react';
@@ -8,7 +8,7 @@ interface ChromaContextProps {
 }
 
 export default function ChromaContext({ children }: ChromaContextProps) {
-  const { isMobileDevice } = useUI();
+  const { isMobileDevice } = useDeviceType();
   const isContextVisible = useUIStore((state) => state.isContextVisible);
   return (
     <>
