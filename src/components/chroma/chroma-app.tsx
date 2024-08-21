@@ -2,6 +2,7 @@ import MainSection from './sections/main-section';
 import chromaLogo from '@/assets/img/rainbow.webp';
 import ChromaHeader from '@/components/chroma/chroma-header';
 import ChromaMenu from '@/components/chroma/chroma-menu';
+import { Toaster } from '@/components/ui/sonner';
 
 export function ChromaApp() {
   return (
@@ -18,6 +19,7 @@ export function ChromaApp() {
       <main className='flex w-full gap-4 p-4 overflow-auto col-span-2 md:col-span-1'>
         <MainSection />
       </main>
+      <Toaster />
     </div>
   );
 }
