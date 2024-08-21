@@ -15,7 +15,7 @@ const Palette = () => {
   const { getColorLuminance } = useColors();
   const { capturePaletteAsImage } = usePalette();
   const palette = useChromaStore((state) => state.palette);
-  const paletteOrientation = useUIStore((state) => state.paletteOrientation);
+  const orientation = useUIStore((state) => state.paletteOrientation);
 
   return (
     <ContextMenu>
@@ -23,14 +23,14 @@ const Palette = () => {
         <div
           className={cn(
             'border border-dashed items-center justify-center rounded-lg overflow-hidden',
-            paletteOrientation === 'horizontal' ? 'w-full h-40' : 'w-40 h-full'
+            orientation === 'landscape' ? 'w-full h-40' : 'w-40 h-full'
           )}
         >
           <div
             id='palette-container'
             className={cn(
               'flex h-full w-full justify-center',
-              paletteOrientation === 'horizontal' ? 'flex-row' : 'flex-col',
+              orientation === 'landscape' ? 'flex-row' : 'flex-col',
               palette.length > 0 ? 'items-stretch' : 'items-center'
             )}
           >
@@ -40,9 +40,7 @@ const Palette = () => {
                   key={color}
                   className={cn(
                     'grow flex items-stretch justify-center',
-                    paletteOrientation === 'horizontal'
-                      ? 'flex-col'
-                      : 'flex-row'
+                    orientation === 'landscape' ? 'flex-row' : 'flex-col'
                   )}
                 >
                   <div
@@ -63,7 +61,12 @@ const Palette = () => {
                 </div>
               ))
             ) : (
-              <span className='text-2xl text-muted text-pretty'>
+              <span
+                className={cn(
+                  'text-2xl text-muted text-pretty',
+                  orientation === 'portrait' && 'writing-mode-vertical-lr'
+                )}
+              >
                 NO PALETTE FOR NOW
               </span>
             )}
