@@ -6,7 +6,7 @@ import ChromaMenu from '@/components/chroma/chroma-menu';
 export function ChromaApp() {
   return (
     <div className='grid h-screen w-full grid-cols-[4rem_1fr] grid-rows-[4rem_1fr_4rem] md:grid-rows-[4rem_1fr]'>
-      <div className='p-2 sticky top-0 left-0 bg-background z-10'>
+      <div className='p-2 sticky top-0 left-0 bg-background z-10 border-b'>
         <img
           className='rounded-lg size-12'
           src={chromaLogo}
