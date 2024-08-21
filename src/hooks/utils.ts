@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 
 export const useDeviceType = () => {
   const setOrientation = useUIStore((state) => state.setPaletteOrientation);
+  const setIsContextVisible = useUIStore((state) => state.setIsContextVisible);
   const [isMobileDevice, setIsMobileDevice] = useState(
     window.matchMedia('(max-width: 767px)').matches
   );
@@ -17,6 +18,8 @@ export const useDeviceType = () => {
       } else {
         setOrientation('landscape');
       }
+
+      setIsContextVisible(isMobileDevice ? false : true);
     };
 
     handleResize();
@@ -24,7 +27,7 @@ export const useDeviceType = () => {
     window.addEventListener('resize', handleResize);
 
     return () => window.removeEventListener('resize', handleResize);
-  }, [isMobileDevice, setOrientation]);
+  }, [isMobileDevice, setOrientation, setIsContextVisible]);
 
   return {
     isMobileDevice,
