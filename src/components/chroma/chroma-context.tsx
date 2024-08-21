@@ -1,20 +1,22 @@
+import { useUI } from '@/hooks/ui';
 import { cn } from '@/lib/utils';
 import useUIStore from '@/stores/ui';
 import { ReactNode } from 'react';
 
 interface ChromaContextProps {
-  visible?: boolean;
   children: ReactNode;
 }
 
 export default function ChromaContext({ children }: ChromaContextProps) {
-  const isVisible = useUIStore((state) => state.isContextVisible);
+  const { isMobileDevice } = useUI();
+  const isContextVisible = useUIStore((state) => state.isContextVisible);
   return (
     <>
       <div
         className={cn(
-          'relative hidden flex-col items-start gap-8',
-          isVisible && 'md:flex'
+          'h-full bg-background',
+          isMobileDevice ? 'absolute z-20 w-full' : 'w-96 flex-none',
+          !isContextVisible && 'hidden'
         )}
       >
         {children}
