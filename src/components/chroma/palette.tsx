@@ -22,7 +22,7 @@ const Palette = () => {
       <ContextMenuTrigger className='flex w-full h-full items-center justify-center'>
         <div
           className={cn(
-            'border border-dashed items-center justify-center rounded-lg overflow-hidden',
+            'border light:border-muted-foreground/40 border-dashed items-center justify-center rounded-lg overflow-hidden',
             orientation === 'landscape' ? 'w-full h-40' : 'w-40 h-full'
           )}
         >
@@ -63,7 +63,7 @@ const Palette = () => {
             ) : (
               <span
                 className={cn(
-                  'text-2xl text-muted text-pretty',
+                  'text-2xl text-muted-foreground/40 dark:text-muted text-pretty',
                   orientation === 'portrait' && 'writing-mode-vertical-lr'
                 )}
               >
