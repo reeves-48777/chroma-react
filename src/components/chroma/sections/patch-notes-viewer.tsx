@@ -68,7 +68,7 @@ export default function PatchNotesViewer() {
                     >
                       <Button
                         variant='ghost'
-                        className='opacity-100 md:opacity-0 group-hover:opacity-100 absolute top-0 right-3 z-50 transition-opacity will-change-[opacity] duration-150 ease-in-out'
+                        className='opacity-100 md:opacity-0 group-hover:opacity-100 absolute top-0 right-0 md:right-3 z-50 transition-opacity will-change-[opacity] duration-150 ease-in-out'
                       >
                         <Copy size={16} />
                       </Button>
