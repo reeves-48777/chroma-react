@@ -11,7 +11,6 @@ export const useUI = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      console.log('yippeeee');
       setIsMobileDevice(window.matchMedia('(max-width: 767px)').matches);
     };
 
