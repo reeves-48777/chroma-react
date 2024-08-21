@@ -5,6 +5,7 @@ import {
   TooltipTrigger,
   TooltipContent,
 } from '@/components/ui/tooltip';
+import { useUI } from '@/hooks/ui';
 import useUIStore from '@/stores/ui';
 import { Image, Settings2, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
 import { lazy } from 'react';
@@ -60,6 +61,11 @@ const Menu = ({ className = '' }: MenuProps) => {
 
   const isContextVisible = useUIStore((state) => state.isContextVisible);
   const setIsContextVisible = useUIStore((state) => state.setIsContextVisible);
+  const toggleContextVisibility = useUIStore(
+    (state) => state.toggleContextVisibilty
+  );
+
+  const { isMobileDevice } = useUI();
 
   return (
     <>
@@ -74,8 +80,12 @@ const Menu = ({ className = '' }: MenuProps) => {
                 aria-label='Extract palette from image'
                 onClick={() => {
                   selectMenu(ImageExtractor);
-                  if (!isContextVisible) {
-                    setIsContextVisible(true);
+                  if (isMobileDevice) {
+                    toggleContextVisibility();
+                  } else {
+                    if (!isContextVisible) {
+                      setIsContextVisible(true);
+                    }
                   }
                 }}
               >
@@ -122,10 +132,10 @@ const Menu = ({ className = '' }: MenuProps) => {
 export default function ChromaMenu() {
   return (
     <>
-      <aside className='z-20 h-full w-full hidden md:flex items-center flex-col border-r'>
+      <aside className='z-20 h-full w-full hidden md:flex items-center flex-col'>
         <Menu />
       </aside>
-      <footer className='row-start-3 col-span-2 md:hidden border-t flex items-center justify-center'>
+      <footer className='row-start-3 col-span-2 md:hidden flex items-center justify-center border-t'>
         <Menu />
       </footer>
     </>
