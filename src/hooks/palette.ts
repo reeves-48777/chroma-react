@@ -1,6 +1,11 @@
+import useChromaStore from '@/stores/chroma';
 import html2canvas from 'html2canvas';
 
 export const usePalette = () => {
+  const isPaletteEmpty = useChromaStore(
+    (state) => state.palette.length === 0 || !state.palette
+  );
+
   const capturePaletteAsImage = async (
     elementId: string,
     filename = `palette-${Date.now()}.png`
@@ -25,6 +30,7 @@ export const usePalette = () => {
   };
 
   return {
+    isPaletteEmpty,
     capturePaletteAsImage,
   };
 };
