@@ -1,5 +1,6 @@
-import Palette from '@/components/chroma/palette';
+// import DragNDropPalette from './drag-n-drop-palette';
 import PaletteCommands from '@/components/chroma/palette-commands';
+import PaletteViewer from '@/components/chroma/palette-viewer';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import useUIStore from '@/stores/ui';
@@ -21,7 +22,7 @@ export default function ChromaContent() {
       >
         Palette editor
       </Badge>
-      <Palette />
+      <PaletteViewer />
       <div className='relative overflow-hidden rounded-lg border bg-background focus-within:ring-1 p-4 flex items-center'>
         <PaletteCommands className='w-full' />
       </div>
