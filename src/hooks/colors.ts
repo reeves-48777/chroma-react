@@ -1,23 +1,6 @@
-import useChromaStore from '@/stores/chroma';
 import { useCallback } from 'react';
 
 export const useColors = () => {
-  const colors = useChromaStore((state) => state.colors);
-  const setColorsInStore = useChromaStore((state) => state.setColors);
-
-  const toggleColor = useCallback(
-    (value: string) => {
-      setColorsInStore(
-        colors.map((color) =>
-          color.value === value
-            ? { ...color, selected: !color.selected }
-            : color
-        )
-      );
-    },
-    [colors, setColorsInStore]
-  );
-
   const toHexaStringPadded = useCallback((decimalValue: number) => {
     return decimalValue.toString(16).padStart(2, '0');
   }, []);
@@ -48,7 +31,6 @@ export const useColors = () => {
   };
 
   return {
-    toggleColor,
     rgbToHex,
     getColorLuminance,
   };

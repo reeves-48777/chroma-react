@@ -6,7 +6,7 @@ import useChromaStore from '@/stores/chroma';
 import init, { extract_palette } from '@wasm/chroma_wasm';
 import { useState, useEffect, MouseEventHandler } from 'react';
 
-export default function ImageSelector() {
+export default function ImageColorExtractor() {
   const [wasmReady, setWasmReady] = useState(false);
   const { rgbToHex } = useColors();
 
@@ -35,12 +35,7 @@ export default function ImageSelector() {
         const extracted_colors = extract_palette(new Uint8Array(ab), 5).map(
           (c: { r: number; g: number; b: number }) => rgbToHex(c)
         );
-        setColors(
-          extracted_colors.map((color: string) => ({
-            value: color,
-            selected: false,
-          }))
-        );
+        setColors(extracted_colors);
       };
       fileReader.readAsArrayBuffer(imageFile!);
     }
