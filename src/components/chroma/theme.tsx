@@ -89,7 +89,7 @@ export const ThemeSwitcher = () => {
 };
 
 export function ThemeController() {
-  const { setTheme: setTheme } = useTheme();
+  const { setTheme } = useTheme();
 
   return (
     <DropdownMenu>
