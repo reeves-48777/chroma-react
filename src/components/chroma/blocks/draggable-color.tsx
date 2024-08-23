@@ -35,11 +35,9 @@ export default function DraggableColor({ id, color }: DraggrableColorProps) {
       {...listeners}
       className='grow flex items-center justify-center font-semibold'
       initial={{
-        border: 'none',
         borderRadius: '0',
       }}
       animate={{
-        border: isDragging ? '2px solid black' : 'none',
         borderRadius: isDragging ? '0.25rem' : '0',
       }}
     >
