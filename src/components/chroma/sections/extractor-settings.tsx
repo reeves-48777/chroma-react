@@ -1,9 +1,11 @@
 import AutoForm, { AutoFormSubmit } from '@/components/ui/auto-form';
+import useChromaStore from '@/stores/chroma';
 import * as z from 'zod';
 
 export default function ExtractorSettings() {
+  const settings = useChromaStore((state) => state.settings);
   const settingsSchema = z.object({
-    numberOfColors: z.coerce
+    n_colors: z.coerce
       .number({
         invalid_type_error: 'The numbers of color to extract must be a number',
       })
@@ -14,19 +16,25 @@ export default function ExtractorSettings() {
       .max(10, {
         message: "ok that's a lot of colors don't you think ?",
       })
-      .describe('Numbers of colors to extract from image')
-      .default(5)
-      .optional(),
+      .default(settings.n_colors),
 
-    extractionAlgorithm: z
-      .enum(['K-MEANS', 'K-MEANS++'])
-      .default('K-MEANS')
-      .describe('Algorithm used to extract colors')
-      .optional(),
+    algorithm: z.enum(['KMeans', 'KMeansPP']).default(settings.algorithm),
   });
 
+  const setSettings = useChromaStore((state) => state.setSettings);
   return (
-    <AutoForm formSchema={settingsSchema}>
+    <AutoForm
+      formSchema={settingsSchema}
+      fieldConfig={{
+        n_colors: {
+          description: 'The number of colors you want to extract',
+        },
+        algorithm: {
+          description: 'The algorithm used to extract colors from image',
+        },
+      }}
+      onSubmit={(data) => setSettings(data)}
+    >
       <AutoFormSubmit>Apply settings</AutoFormSubmit>
     </AutoForm>
   );

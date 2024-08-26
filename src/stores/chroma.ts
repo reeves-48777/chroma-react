@@ -1,5 +1,12 @@
 import { create } from 'zustand';
 
+type SettingsType = {
+  n_colors: number;
+  algorithm: 'KMeans' | 'KMeansPP';
+  precision?: number;
+  n_size?: number;
+};
+
 type Store = {
   colors: string[];
   setColors: (colors: string[]) => void;
@@ -11,6 +18,9 @@ type Store = {
 
   imageFile: File | null;
   setImageFile: (imageFile: File | null) => void;
+
+  settings: SettingsType;
+  setSettings: (settings: SettingsType) => void;
 };
 
 const useChromaStore = create<Store>((set) => ({
@@ -25,6 +35,12 @@ const useChromaStore = create<Store>((set) => ({
 
   imageFile: null,
   setImageFile: (imageFile: File | null) => set(() => ({ imageFile })),
+
+  settings: {
+    n_colors: 5,
+    algorithm: 'KMeans',
+  },
+  setSettings: (settings: SettingsType) => set(() => ({ settings })),
 }));
 
 export default useChromaStore;

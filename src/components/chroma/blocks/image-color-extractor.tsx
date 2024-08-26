@@ -13,6 +13,7 @@ export default function ImageColorExtractor() {
   const imageFile = useChromaStore((state) => state.imageFile);
   const setImageFile = useChromaStore((state) => state.setImageFile);
   const setColors = useChromaStore((state) => state.setColors);
+  const settings = useChromaStore((state) => state.settings);
 
   const handleImageChange = (file: File | null) => setImageFile(file);
 
@@ -32,9 +33,11 @@ export default function ImageColorExtractor() {
 
       fileReader.onload = async (e: ProgressEvent<FileReader>) => {
         const ab = e.target?.result as ArrayBuffer;
-        const extracted_colors = extract_palette(new Uint8Array(ab), 5).map(
-          (c: { r: number; g: number; b: number }) => rgbToHex(c)
-        );
+        const extracted_colors = extract_palette(
+          new Uint8Array(ab),
+          settings.n_colors,
+          settings.algorithm
+        ).map((c: { r: number; g: number; b: number }) => rgbToHex(c));
         setColors(extracted_colors);
       };
       fileReader.readAsArrayBuffer(imageFile!);

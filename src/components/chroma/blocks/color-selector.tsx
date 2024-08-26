@@ -77,7 +77,7 @@ export default function ColorSelector() {
       <Label htmlFor='color-selector'>Select colors</Label>
       <div
         id='color-selector'
-        className='flex gap-4 items-center justify-center'
+        className='flex gap-4 items-center justify-center w-96'
         style={{ touchAction: 'none' }}
         {...bind()}
       >
@@ -88,15 +88,17 @@ export default function ColorSelector() {
         >
           {isLocked ? <Lock size={16} /> : <LockOpen size={16} />}
         </Button>
-        {colors.map((color) => (
-          <div key={color}>
-            <ColorCheckbox
-              color={color}
-              isSelected={selectedColors.includes(color)}
-              onToggle={() => handleClick(color)}
-            />
-          </div>
-        ))}
+        <div className='flex flex-wrap'>
+          {colors.map((color) => (
+            <div key={color}>
+              <ColorCheckbox
+                color={color}
+                isSelected={selectedColors.includes(color)}
+                onToggle={() => handleClick(color)}
+              />
+            </div>
+          ))}
+        </div>
 
         <Button
           size='icon'
