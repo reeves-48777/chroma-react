@@ -1,6 +1,6 @@
 // import DragNDropPalette from './drag-n-drop-palette';
-import PaletteCommands from '@/components/chroma/palette-commands';
-import PaletteViewer from '@/components/chroma/palette-viewer';
+import PaletteCommands from '@/components/chroma/old-ui/palette-commands';
+import PaletteViewer from '@/components/chroma/old-ui/palette-viewer';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import useUIStore from '@/stores/ui';

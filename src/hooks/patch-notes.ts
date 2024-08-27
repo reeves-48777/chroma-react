@@ -16,7 +16,7 @@ const usePatchNotes = () => {
         setIsLoading(true);
 
         // step 1 : fetch files list
-        const response = await fetch(`${baseUrl}patch-notes/manifest.json`, {
+        const response = await fetch(`${baseUrl}patch-notes/list.json`, {
           signal,
         });
         if (!response.ok) {

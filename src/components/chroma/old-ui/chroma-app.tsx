@@ -1,7 +1,7 @@
-import MainSection from './sections/main-section';
+import MainSection from '../sections/main-section';
 import chromaLogo from '@/assets/img/rainbow.webp';
-import ChromaHeader from '@/components/chroma/chroma-header';
-import ChromaMenu from '@/components/chroma/chroma-menu';
+import ChromaHeader from '@/components/chroma/old-ui/chroma-header';
+import ChromaMenu from '@/components/chroma/old-ui/chroma-menu';
 import { Toaster } from '@/components/ui/sonner';
 
 export function ChromaApp() {

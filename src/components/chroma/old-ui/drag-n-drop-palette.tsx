@@ -1,4 +1,4 @@
-import DraggableColor from './blocks/draggable-color';
+import DraggableColor from '../blocks/draggable-color';
 import { cn } from '@/lib/utils';
 import useChromaStore from '@/stores/chroma';
 import useUIStore from '@/stores/ui';
@@ -17,10 +17,11 @@ import {
   SortableContext,
 } from '@dnd-kit/sortable';
 
-// const colors = ['#FF5733', '#33FF57', '#3357FF', '#F0FF33', '#FF33C4'];
+const colors = ['#FF5733', '#33FF57', '#3357FF', '#F0FF33', '#FF33C4'];
 
 export default function DragNDropPalette() {
-  const items = useChromaStore((state) => state.palette);
+  // const items = useChromaStore((state) => state.palette);
+  const items = colors;
   const setItems = useChromaStore((state) => state.setPalette);
 
   const orientation = useUIStore((state) => state.paletteOrientation);

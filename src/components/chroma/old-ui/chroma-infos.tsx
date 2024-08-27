@@ -1,4 +1,4 @@
-import PatchNotesViewer from './sections/patch-notes-viewer';
+import PatchNotesViewer from '../sections/patch-notes-viewer';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,

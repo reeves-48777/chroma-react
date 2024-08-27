@@ -1,0 +1,16 @@
+{
+  "name": "Chroma",
+  "short_name": "Chroma",
+  "description": "Create palette applications",
+  "start_url": "/chroma/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/chroma/icons/chroma-1024x1024.webp",
+      "sizes": "1024x1024",
+      "type": "image/webp"
+    }
+  ]
+}

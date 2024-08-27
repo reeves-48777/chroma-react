@@ -1,5 +1,5 @@
-import ChromaInfos from '@/components/chroma/chroma-infos';
-import { ThemeSwitcher } from '@/components/chroma/theme';
+import ChromaInfos from '@/components/chroma/old-ui/chroma-infos';
+import { ThemeSelector } from '@/components/chroma/old-ui/theme';
 
 export default function ChromaHeader() {
   return (
@@ -9,7 +9,7 @@ export default function ChromaHeader() {
       </h1>
       <div className='flex gap-4 items-center'>
         <ChromaInfos />
-        <ThemeSwitcher />
+        <ThemeSelector />
       </div>
     </header>
   );

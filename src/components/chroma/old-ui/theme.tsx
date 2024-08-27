@@ -80,14 +80,6 @@ export function ThemeProvider({
   );
 }
 
-export const ThemeSwitcher = () => {
-  return (
-    <ThemeProvider>
-      <ThemeController />
-    </ThemeProvider>
-  );
-};
-
 export function ThemeController() {
   const { setTheme } = useTheme();
 
@@ -117,3 +109,38 @@ export function ThemeController() {
     </DropdownMenu>
   );
 }
+
+export const ThemeSelector = () => {
+  return (
+    <ThemeProvider>
+      <ThemeController />
+    </ThemeProvider>
+  );
+};
+
+export const ThemeSwitch = () => {
+  const { theme, setTheme } = useTheme();
+  return (
+    <>
+      {theme === 'dark' ? (
+        <Moon
+          className='animate-in fade-in spin-in-90'
+          onClick={() => setTheme('light')}
+        />
+      ) : (
+        <Sun
+          className='animate-out fade-int spin-out-90'
+          onClick={() => setTheme('dark')}
+        />
+      )}
+    </>
+  );
+};
+
+export const ThemeSwitcher = () => {
+  return (
+    <ThemeProvider>
+      <ThemeSwitch />
+    </ThemeProvider>
+  );
+};

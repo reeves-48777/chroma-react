@@ -1,5 +1,5 @@
-import ChromaContent from '@/components/chroma/chroma-content';
-import ChromaContext from '@/components/chroma/chroma-context';
+import ChromaContent from '@/components/chroma/old-ui/chroma-content';
+import ChromaContext from '@/components/chroma/old-ui/chroma-context';
 import { Spinner } from '@/components/ui/spinner';
 import useUIStore from '@/stores/ui';
 import { Suspense } from 'react';
